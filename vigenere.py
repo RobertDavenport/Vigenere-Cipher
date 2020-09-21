@@ -22,7 +22,13 @@ def decode(cipher,key): # Decodes encoded text using a given key
         else: # The current character is now a letter
             text += cipher[i] # Don't convert non-letter characters
     return text
-        
+
+def key_text(text): # Removes non-letter characters from a string
+    plaintext = ""
+    for i in range(len(text)):
+        if(text[i] in LETTERS_LOW or text[i] in LETTERS_HIGH):
+            plaintext += text[i]
+    return plaintext
 
 # Uppercase letters
 LETTERS_HIGH = ('A','B','C','D','E','F','G','H','I','J','K','L','M',
@@ -33,12 +39,13 @@ LETTERS_LOW = ('a','b','c','d','e','f','g','h','i','j','k','l','m',
 LETTER_CODES_HIGH = {} # Stores numerical values of uppercase letters
 LETTER_CODES_LOW = {} # Stores numerical values of lowercase letters
 
-for i in range(len(LETTERS_HIGH)): # Builds lower- and uppercase dictionaries letter values.
+for i in range(len(LETTERS_HIGH)): # Builds lower- and uppercase dictionaries' letter values.
     LETTER_CODES_HIGH[LETTERS_HIGH[i]] = i
     LETTER_CODES_LOW[LETTERS_LOW[i]] = i
 
-task = sys.argv[1] # -e or -d to specify decoding or encoding using the given key
-key = sys.argv[2] # Cipher key from command line arguments
+task = sys.argv[1] # -e or -d to specify decoding or encoding using the given key.
+key = key_text(sys.argv[2]) # Cipher key from command line arguments, with non-letter characters removed.
+
 
 if(task == "-e"): # Encoding using the given key
     try:
@@ -52,6 +59,3 @@ elif(task == "-d"): # Decoding using the given key
             print(decode(input(),key))
     except EOFError:
         exit(0)
-#print(cipher)
-#print(decoder(cipher,key))
-
