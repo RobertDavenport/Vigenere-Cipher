@@ -25,11 +25,11 @@ def decode(cipher,key): # Decodes encoded text using a given key
         
 
 # Uppercase letters
-LETTERS_HIGH = ['A','B','C','D','E','F','G','H','I','J','K','L','M',
-                'N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+LETTERS_HIGH = ('A','B','C','D','E','F','G','H','I','J','K','L','M',
+                'N','O','P','Q','R','S','T','U','V','W','X','Y','Z')
 # Lowercase letters
-LETTERS_LOW = ['a','b','c','d','e','f','g','h','i','j','k','l','m',
-               'n','o','p','q','r','s','t','u','v','w','x','y','z']
+LETTERS_LOW = ('a','b','c','d','e','f','g','h','i','j','k','l','m',
+               'n','o','p','q','r','s','t','u','v','w','x','y','z')
 LETTER_CODES_HIGH = {} # Stores numerical values of uppercase letters
 LETTER_CODES_LOW = {} # Stores numerical values of lowercase letters
 
