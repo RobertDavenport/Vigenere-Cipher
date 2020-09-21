@@ -1,23 +1,6 @@
 import sys
 # Vigenere cipher
 
-""" Table-based solver
-def create_table(key):
-    table = []
-    for i in range(len(key)):
-        table.append([])
-        offset = LETTER_CODES[key[i]]
-        for j in range(len(LETTERS)):
-            table[i].append(LETTERS[(j+offset)%len(LETTERS)])
-    return table
-
-def solver_1(table,cipher):
-    solved = ""
-    for i in range(len(cipher)):
-        solved += table[i%len(table)][LETTER_CODES[cipher[i]]]
-    return(solved)
-"""
-
 def encode(text,key): # Encodes plaintext using a given key
     cipher = "" # The encoded plaintext
     for i in range(len(text)): # Iterate over the plaintext
@@ -54,16 +37,21 @@ for i in range(len(LETTERS_HIGH)): # Builds lower- and uppercase dictionaries le
     LETTER_CODES_HIGH[LETTERS_HIGH[i]] = i
     LETTER_CODES_LOW[LETTERS_LOW[i]] = i
 
-task = sys.argv[1]
-key = sys.argv[2]
-#text = "MYMESSAGE"
-#cipher = encoder(text,key)
-if(task == "-e"):
-    while(True):
-        print(encode(input(),key))
-elif(task == "-d"):
-    while(True):
-        print(decode(input(),key))
+task = sys.argv[1] # -e or -d to specify decoding or encoding using the given key
+key = sys.argv[2] # Cipher key from command line arguments
+
+if(task == "-e"): # Encoding using the given key
+    try:
+        while(True):
+            print(encode(input(),key))
+    except EOFError:
+        exit(0)
+elif(task == "-d"): # Decoding using the given key
+    try:
+        while(True):
+            print(decode(input(),key))
+    except EOFError:
+        exit(0)
 #print(cipher)
 #print(decoder(cipher,key))
 
