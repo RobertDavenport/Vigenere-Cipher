@@ -3,30 +3,34 @@ import sys
 
 def encode(text,key): # Encodes plaintext using a given key
     cipher = "" # The encoded plaintext
+    count = 0
     for i in range(len(text)): # Iterate over the plaintext
         if(text[i] in LETTER_CODES_HIGH): # If the current character is uppercase
-            cipher += LETTERS_HIGH[(LETTER_CODES_HIGH[text[i]]+(LETTER_CODES_HIGH[(key[i%len(key)]).upper()]))%len(LETTERS_HIGH)]
+            cipher += LETTERS_HIGH[(LETTER_CODES_HIGH[text[i]]+(LETTER_CODES_HIGH[(key[(i-count)%len(key)]).upper()]))%len(LETTERS_HIGH)]
         elif(text[i] in LETTER_CODES_LOW): # If the current character is lowercase
-            cipher += LETTERS_LOW[(LETTER_CODES_LOW[text[i]]+(LETTER_CODES_LOW[(key[i%len(key)]).lower()]))%len(LETTERS_LOW)]
+            cipher += LETTERS_LOW[(LETTER_CODES_LOW[text[i]]+(LETTER_CODES_LOW[(key[(i-count)%len(key)]).lower()]))%len(LETTERS_LOW)]
         else: # The current character is not a letter
+            count += 1
             cipher += text[i] # Don't convert non-letter characters    
     return cipher
 
 def decode(cipher,key): # Decodes encoded text using a given key
     text = "" # The decoded cipher
+    count = 0
     for i in range(len(cipher)): # Iterate over the plaintext
         if(cipher[i] in LETTER_CODES_HIGH): # If the current character is uppercase
-            text += LETTERS_HIGH[(LETTER_CODES_HIGH[cipher[i]]-(LETTER_CODES_HIGH[(key[i%len(key)]).upper()]))%len(LETTERS_HIGH)]
+            text += LETTERS_HIGH[(LETTER_CODES_HIGH[cipher[i]]-(LETTER_CODES_HIGH[(key[(i-count)%len(key)]).upper()]))%len(LETTERS_HIGH)]
         elif(cipher[i] in LETTER_CODES_LOW): # If the current character is lowercase
-            text += LETTERS_LOW[(LETTER_CODES_LOW[cipher[i]]-(LETTER_CODES_LOW[(key[i%len(key)]).lower()]))%len(LETTERS_LOW)]
+            text += LETTERS_LOW[(LETTER_CODES_LOW[cipher[i]]-(LETTER_CODES_LOW[(key[(i-count)%len(key)]).lower()]))%len(LETTERS_LOW)]
         else: # The current character is now a letter
+            count += 1
             text += cipher[i] # Don't convert non-letter characters
     return text
 
 def key_text(text): # Removes non-letter characters from a string
     plaintext = ""
     for i in range(len(text)):
-        if(text[i] in LETTERS_LOW or text[i] in LETTERS_HIGH):
+        if(text[i] != " "):
             plaintext += text[i]
     return plaintext
 
@@ -50,12 +54,12 @@ key = key_text(sys.argv[2]) # Cipher key from command line arguments, with non-l
 if(task == "-e"): # Encoding using the given key
     try:
         while(True):
-            print(encode(input(),key))
-    except EOFError:
+            print(encode(input(),key)) # Reads all text in stdin
+    except EOFError: # Exits script on end of file
         exit(0)
 elif(task == "-d"): # Decoding using the given key
     try:
         while(True):
-            print(decode(input(),key))
-    except EOFError:
+            print(decode(input(),key)) # Reads all ciphers on stdin
+    except EOFError: # Exits script on end of file
         exit(0)
