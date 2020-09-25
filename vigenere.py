@@ -60,6 +60,6 @@ if(task == "-e"): # Encoding using the given key
 elif(task == "-d"): # Decoding using the given key
     try:
         while(True):
-            print(decode(input(),key)) # Reads all ciphers on stdin
+            print(decode(input(),key)) # Reads all ciphers in stdin
     except EOFError: # Exits script on end of file
         exit(0)
